@@ -12,17 +12,20 @@ namespace YoutubeSearch.Fluent.Plugin
 		/// <summary>
 		/// The name of the Youtube video. Shown in Fluent Search as a result.
 		/// </summary>
-		public string? VideoName { get; set; }
+		public string VideoName { get; set; }
 		/// <summary>
 		/// The video description, hopefully shown as preview.
 		/// </summary>
-		public string? videoDescription { get; set; }
+		public string videoDescription { get; set; }
 		/// <summary>
 		/// Used for operating the result. Basically all operations require it more or less.
 		/// </summary>
-		public string? VideoURL { get; set; }
-		public YTSearchResult(string resultName, string searchedText, string resultType, double score, IList<ISearchOperation> supportedOperations, ICollection<SearchTag> tags, ProcessInfo processInfo = null) : base(resultName, searchedText, resultType, score, supportedOperations, tags, processInfo)
+		public string VideoURL { get; set; }
+		public YTSearchResult(string videoName, string videoDescription, string videoURL, string resultName, string searchedText, string resultType, double score, IList<ISearchOperation> supportedOperations, ICollection<SearchTag> tags, ProcessInfo processInfo = null) : base(resultName, searchedText, resultType, score, supportedOperations, tags, processInfo)
 		{
+			VideoName = videoName;
+			videoDescription = videoDescription;
+			VideoURL = videoURL;
 		}
 
 		protected override void OnSelectedSearchResultChanged()
