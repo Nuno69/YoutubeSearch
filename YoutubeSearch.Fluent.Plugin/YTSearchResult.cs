@@ -1,7 +1,10 @@
-﻿using Blast.Core.Interfaces;
+﻿using Blast.API.Search;
+using Blast.Core.Interfaces;
 using Blast.Core.Objects;
 using Blast.Core.Results;
-
+using System.Collections.ObjectModel;
+using YoutubeExplode;
+using YoutubeExplode.Videos;
 namespace YoutubeSearch.Fluent.Plugin
 {
 	/// <summary>
@@ -9,23 +12,13 @@ namespace YoutubeSearch.Fluent.Plugin
 	/// </summary>
 	public sealed class YTSearchResult : SearchResultBase
 	{
-		/// <summary>
-		/// The name of the Youtube video. Shown in Fluent Search as a result.
-		/// </summary>
-		public string VideoName { get; set; }
-		/// <summary>
-		/// The video description, hopefully shown as preview.
-		/// </summary>
-		public string videoDescription { get; set; }
-		/// <summary>
-		/// Used for operating the result. Basically all operations require it more or less.
-		/// </summary>
-		public string VideoURL { get; set; }
-		public YTSearchResult(string videoName, string videoDescription, string videoURL, string resultName, string searchedText, string resultType, double score, IList<ISearchOperation> supportedOperations, ICollection<SearchTag> tags, ProcessInfo processInfo = null) : base(resultName, searchedText, resultType, score, supportedOperations, tags, processInfo)
+		internal static readonly ObservableCollection<ISearchOperation> SupportedOperations = new() { new YTOpenInBrowserOperation() };
+		private static readonly SearchTag[] SearchTags = { new() { Name = "Youtube" } };
+		public IVideo Video { get; set; }
+		public YTSearchResult(IVideo video, string searchedText, ProcessInfo processInfo = null) : base(video.Title, searchedText, "Youtube",video.Title.SearchTokens(searchedText), SupportedOperations, SearchTags, processInfo)
 		{
-			VideoName = videoName;
-			videoDescription = videoDescription;
-			VideoURL = videoURL;
+			Video = video;
+			ShouldCacheResult = true;
 		}
 
 		protected override void OnSelectedSearchResultChanged()
