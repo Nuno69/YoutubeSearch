@@ -1,13 +1,13 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using Blast.API.Search;
+using Blast.API.Processes;
 using Blast.Core;
 using Blast.Core.Interfaces;
 using Blast.Core.Objects;
 using Blast.Core.Results;
 using YoutubeExplode;
 using YoutubeExplode.Common;
-
 namespace YoutubeSearch.Fluent.Plugin
 {
 	public class YTSearchApp : ISearchApplication
@@ -61,7 +61,16 @@ namespace YoutubeSearch.Fluent.Plugin
 			{
 				return new ValueTask<IHandleResult>(new HandleResult(true, true));
 			}
-			var video = yTSearchResult.Video;
+			switch (searchResult.SelectedOperation)
+			{
+				case YTOpenInBrowserOperation openInBrowserOperation:
+					ProcessUtils.GetManagerInstance().StartNewProcess(yTSearchResult.Video.Url);
+					break;
+				case YTCopyURLOperation copyURLOperation:
+					break;
+				default:
+					break;
+			}
 			return new ValueTask<IHandleResult>(new HandleResult(true, true));
 		}
 	}

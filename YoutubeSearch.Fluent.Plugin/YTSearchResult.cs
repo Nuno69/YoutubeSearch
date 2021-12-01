@@ -12,12 +12,13 @@ namespace YoutubeSearch.Fluent.Plugin
 	/// </summary>
 	public sealed class YTSearchResult : SearchResultBase
 	{
-		internal static readonly ObservableCollection<ISearchOperation> SupportedOperations = new() { new YTOpenInBrowserOperation() };
+		internal static readonly ObservableCollection<ISearchOperation> SupportedOperations = new() { new YTOpenInBrowserOperation(), new YTDownloadVideoOperation(), new YTCopyURLOperation() };
 		private static readonly SearchTag[] SearchTags = { new() { Name = "Youtube" } };
 		public IVideo Video { get; set; }
 		public YTSearchResult(IVideo video, string searchedText, ProcessInfo processInfo = null) : base(video.Title, searchedText, "Youtube",video.Title.SearchTokens(searchedText), SupportedOperations, SearchTags, processInfo)
 		{
 			Video = video;
+			AdditionalInformation = video.Author.Title;
 			ShouldCacheResult = true;
 		}
 
