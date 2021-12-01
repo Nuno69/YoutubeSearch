@@ -8,6 +8,7 @@ using Blast.Core.Objects;
 using Blast.Core.Results;
 using YoutubeExplode;
 using YoutubeExplode.Common;
+using TextCopy;
 namespace YoutubeSearch.Fluent.Plugin
 {
 	public class YTSearchApp : ISearchApplication
@@ -67,6 +68,7 @@ namespace YoutubeSearch.Fluent.Plugin
 					ProcessUtils.GetManagerInstance().StartNewProcess(yTSearchResult.Video.Url);
 					break;
 				case YTCopyURLOperation copyURLOperation:
+					Clipboard.SetText(yTSearchResult.Video.Url);
 					break;
 				default:
 					break;
