@@ -1,14 +1,14 @@
-﻿using System.Threading;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
-using Blast.API.Search;
 using Blast.API.Processes;
-using Blast.Core;
 using Blast.Core.Interfaces;
 using Blast.Core.Objects;
 using Blast.Core.Results;
-using YoutubeExplode;
-using YoutubeExplode.Common;
 using TextCopy;
+using YoutubeExplode;
+
 namespace YoutubeSearch.Fluent.Plugin
 {
 	public class YTSearchApp : ISearchApplication
@@ -56,11 +56,11 @@ namespace YoutubeSearch.Fluent.Plugin
 				}
 			}
 		}
-		public ValueTask<IHandleResult> HandleSearchResult(ISearchResult searchResult)
+		public async ValueTask<IHandleResult> HandleSearchResult(ISearchResult searchResult)
 		{
 			if (searchResult is not YTSearchResult yTSearchResult)
 			{
-				return new ValueTask<IHandleResult>(new HandleResult(true, true));
+				return new HandleResult(true, true);
 			}
 			switch (searchResult.SelectedOperation)
 			{
@@ -73,7 +73,7 @@ namespace YoutubeSearch.Fluent.Plugin
 				default:
 					break;
 			}
-			return new ValueTask<IHandleResult>(new HandleResult(true, true));
+		return 	new HandleResult(true, true);
 		}
 	}
 }
