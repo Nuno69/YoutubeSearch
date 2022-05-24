@@ -29,7 +29,7 @@ namespace YoutubeSearch.Fluent.Plugin
                 SearchTagOnly = true,
                 IsProcessSearchEnabled = false,
                 IsProcessSearchOffline = false,
-                ApplicationIconGlyph = null,
+                ApplicationIconGlyph = "\uE714",
                 SearchAllTime = ApplicationSearchTime.Slow,
                 DefaultSearchTags = new List<SearchTag>
                 {
